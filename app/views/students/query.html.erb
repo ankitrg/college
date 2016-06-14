@@ -1,0 +1,96 @@
+<h1>Search as per required..</h1>
+
+<%= form_tag '/students/query/get' do %>
+
+  <%= label_tag 'Group by:' %>
+  <%= select_tag "group",
+  "<option>student_id</option>
+  <option>department</option>
+  <option>year</option>
+  ".html_safe %>
+  <br><br>
+
+  <%= label_tag 'Sort By:' %>
+  <%= select_tag "sort",
+  "<option>maths</option>
+  <option>physics</option>
+  <option>chemistry</option>
+  ".html_safe %>
+  <br><br>
+
+  <%= label_tag 'Dispaly Fields:' %>
+  <%= select_tag "fields",
+  "<option>maths</option>
+  <option>physics</option>
+  <option>chemistry</option>
+  ".html_safe, multiple: true %>
+  <br><br>
+
+  <%= label_tag 'Show Total:' %>
+  <%= radio_button_tag 'total', 'true' %> True
+  <%= radio_button_tag 'total', 'false', true %> False
+  <br><br>
+
+  <%= label_tag 'Should Compare:' %>
+  <%= radio_button_tag 'compare', 'true' %> True
+  <%= radio_button_tag 'compare', 'false', true %> False
+  <br><br>
+
+  <div id="compareon", hidden="true">
+    <%= label_tag 'Compare On:' %>
+    <%= radio_button_tag 'on', 'year', false %> Year
+    <%= radio_button_tag 'on', 'department', false %> Department
+    <br><br>
+  </div>
+
+
+  <div id="comparison", hidden="true">
+    <%= label_tag 'First Comprator:' %>
+    <%= select_tag "first",
+    "".html_safe%>
+
+    <%= label_tag 'Second Comparer' %>
+    <%= select_tag "second",
+    "".html_safe%>
+    <br><br>
+  </div>
+
+  <input type="submit">
+<%- end %>
+
+
+<script type="text/javascript">
+  $('input[name="compare"]').change(function() {
+      var selected = $('input:checked[name="compare"]').val();
+      if(selected == 'true') {
+          console.log("inside true");
+          $('#compareon').show()
+          $('#comparison').show()
+      } else if(selected == 'false') {
+          console.log("inside false");
+          $('#compareon').hide()
+          $('#comparison').hide()
+      }
+  });
+
+  $('input[name="on"]').change(function() {
+    var selected = $('input:checked[name="on"]').val();
+    $('#comparison').show();
+    $('#first').find('option').remove()
+    $('#second').find('option').remove()
+    if(selected == 'year') {
+      console.log("1.show select, 2. populate with year");
+      <% @years.each do |y| %>
+        $('#first').append('<option value=<%=y.year %>><%=y.year%></option>');
+        $('#second').append('<option value=<%=y.year %>><%=y.year%></option>');
+      <% end %>
+    }
+    else if (selected == 'department') {
+        console.log("1.show select camparison, 2.populate with department");
+        <% @departments.each do |d| %>
+          $('#first').append('<option value=<%=d.department %>><%=d.department%></option>');
+          $('#second').append('<option value=<%=d.department %>><%=d.department%></option>');
+        <% end %>
+    }
+  });
+</script>
