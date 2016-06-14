@@ -44,11 +44,15 @@ class StudentsController < ApplicationController
 
     respond_to do |format|
       if @student.save
-        format.html { redirect_to @student, notice: 'Student was successfully created.' }
-        format.json { render json: @student, status: :created, location: @student }
+        format.html { redirect_to @student,
+                      notice: 'Student was successfully created.' }
+        format.json { render json: @student,
+                      status: :created,
+                      location: @student }
       else
         format.html { render action: "new" }
-        format.json { render json: @student.errors, status: :unprocessable_entity }
+        format.json { render json: @student.errors,
+                      status: :unprocessable_entity }
       end
     end
   end
@@ -60,11 +64,13 @@ class StudentsController < ApplicationController
 
     respond_to do |format|
       if @student.update_attributes(params[:student])
-        format.html { redirect_to @student, notice: 'Student was successfully updated.' }
+        format.html { redirect_to @student,
+                      notice: 'Student was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
-        format.json { render json: @student.errors, status: :unprocessable_entity }
+        format.json { render json: @student.errors,
+                      status: :unprocessable_entity }
       end
     end
   end
@@ -124,7 +130,10 @@ class StudentsController < ApplicationController
 
     current_data = get_current_data(@students, fields)
 
-    @obj = {:head_fields => head_fields, :current_data=> current_data, :count=> @count, :total=> @total}
+    @obj = {:head_fields => head_fields,
+            :current_data=> current_data,
+            :count=> @count, :total=> @total
+          }
     # render json: @obj
   end
 
