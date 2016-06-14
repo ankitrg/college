@@ -125,7 +125,7 @@ class StudentsController < ApplicationController
     current_data = get_current_data(@students, fields)
 
     @obj = {:head_fields => head_fields, :current_data=> current_data, :count=> @count, :total=> @total}
-    render json: @obj
+    # render json: @obj
   end
 
   # Private section begins
