@@ -106,17 +106,13 @@ class StudentsController < ApplicationController
     first = params[:first]
     second = params[:second]
 
-    if compare == 'true'
-
-    end
-
     total = params[:total]
     q = get_display_params(fields)
     q.push(group)
     @total = nil
     if total == 'true'
       q1 = get_total_params(fields)
-      @total = Student.select(q1)
+      @total = Student.select(q1)[0]
       # q = q + q1
     end
 
@@ -126,25 +122,29 @@ class StudentsController < ApplicationController
 
     @students = Student.group(group).select(q).order(sortby)
     # Data for head
-    head_fields = [group] + fields
+    if compare == 'true'
+      head_fields = ["name"] + fields
+    else
+      head_fields = [group] + fields
+    end
 
     if compare == 'false'
       current_data = get_nocompare_data(@students, fields, group)
     elsif compare == 'true'
-      group_data = get_group_names(group)
+      # group_data = get_group_names(group)
       current_data = get_data(fields, group, compareon, first)
       past_data = get_data(fields, group, compareon, second)
       # past_data = get_past_data(@students,)
     end
 
     @obj = {:head_fields => head_fields,
-            :group_data => group_data,
+            # :group_data => group_data,
             :current_data=> current_data,
             :past_data => past_data,
             :count=> @count, :total=> @total
           }
 
-    render json: @obj
+    # render json: @obj
   end
 
   # Private section begins
@@ -168,6 +168,7 @@ class StudentsController < ApplicationController
         # temp["group"] = g[group]
         # current_data.push(temp)
         temp = {}
+        temp["group"] = g[group]
         temp["name"] = first_comp
         # # student = Student.where(group + " = ? AND " + on + " = ?", g[group], first_comp)
         query = {}
@@ -203,7 +204,7 @@ class StudentsController < ApplicationController
       students.each do |student|
         temp = {}
         # adding value for the first field
-        temp["name"] = student[group]
+        temp[group] = student[group]
         fields.each do |field|
           temp[field] = student[field]
         end
@@ -215,7 +216,7 @@ class StudentsController < ApplicationController
     def get_total_params(fields)
       lst = []
       fields.each do |field|
-        temp = "SUM(#{field}) as #{field}_sum"
+        temp = "SUM(#{field}) as #{field}"
         lst.push(temp)
       end
       lst
