@@ -128,22 +128,82 @@ class StudentsController < ApplicationController
     # Data for head
     head_fields = [group] + fields
 
-    current_data = get_current_data(@students, fields)
+    if compare == 'false'
+      current_data = get_nocompare_data(@students, fields, group)
+    elsif compare == 'true'
+      group_data = get_group_names(group)
+      current_data = get_data(fields, group, compareon, first)
+      past_data = get_data(fields, group, compareon, second)
+      # past_data = get_past_data(@students,)
+    end
 
     @obj = {:head_fields => head_fields,
+            :group_data => group_data,
             :current_data=> current_data,
+            :past_data => past_data,
             :count=> @count, :total=> @total
           }
-    # render json: @obj
+
+    render json: @obj
   end
 
   # Private section begins
   private
 
-    def get_current_data(students, fields)
+    def get_group_names(group)
+      groups = get_uniq_group_list(group)
+      current_data = []
+      groups.each do |g|
+        temp = {}
+        temp["group"] = g[group]
+        current_data.push(temp)
+      end
+    end
+
+    def get_data(fields, group, on, first_comp)
+      groups = get_uniq_group_list(group)
+      current_data = []
+      groups.each do |g|
+        # temp = {}
+        # temp["group"] = g[group]
+        # current_data.push(temp)
+        temp = {}
+        temp["name"] = first_comp
+        # # student = Student.where(group + " = ? AND " + on + " = ?", g[group], first_comp)
+        query = {}
+        query[group] = g[group]
+        query[on] = first_comp
+        student = Student.where(query)[0]
+        fields.each do |field|
+          temp[field] = student[field]
+        end
+        current_data.push(temp)
+      end
+      current_data
+    end
+
+    def get_uniq_group_list(group)
+      years = Student.select(:year).uniq
+      departments = Student.select(:department).uniq
+      student_ids = Student.select(:student_id).uniq
+
+      lst = nil
+      if group == "student_id"
+        lst = student_ids
+      elsif group == "department"
+        lst = departments
+      elsif group == "year"
+        lst = years
+      end
+      lst
+    end
+
+    def get_nocompare_data(students, fields, group)
       current_data = []
       students.each do |student|
         temp = {}
+        # adding value for the first field
+        temp["name"] = student[group]
         fields.each do |field|
           temp[field] = student[field]
         end
@@ -169,7 +229,6 @@ class StudentsController < ApplicationController
       end
       return lst
     end
-
 
     def student_params
       params.require(:student).permit(
