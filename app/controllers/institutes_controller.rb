@@ -86,4 +86,12 @@ class InstitutesController < ApplicationController
     @students = Student.where(institute_id: params[:id])
   end
 
+  def search
+
+  end
+
+  def find
+
+  end
+
 end
