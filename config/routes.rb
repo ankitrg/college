@@ -7,6 +7,8 @@ College::Application.routes.draw do
   get 'students/query/ask' => 'students#query'
   post 'students/query/get' => 'students#get'
 
+  get 'institutes/:id/list' => 'institutes#list'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

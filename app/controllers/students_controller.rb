@@ -25,6 +25,7 @@ class StudentsController < ApplicationController
   # GET /students/new.json
   def new
     @student = Student.new
+    @institutes = Institute.all
 
     respond_to do |format|
       format.html # new.html.erb
@@ -238,7 +239,8 @@ class StudentsController < ApplicationController
         :maths,
         :physics,
         :chemistry,
-        :year
+        :year,
+        :institute_id
         )
     end
 end

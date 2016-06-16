@@ -1,3 +1,4 @@
 class Institute < ActiveRecord::Base
-  attr_accessible :estd_year, :name
+  attr_accessible :estd, :name
+  has_many :students
 end

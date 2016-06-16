@@ -26,7 +26,7 @@
   ".html_safe, multiple: true %>
   <br><br>
 
-  <%= label_tag 'Show Total:' %>
+  <%= label_tag 'Show Total:' %collection_select(:post, :author_id, Author.all, :id, :name_with_initial, prompt: true)>
   <%= radio_button_tag 'total', 'true' %> True
   <%= radio_button_tag 'total', 'false', true %> False
   <br><br>

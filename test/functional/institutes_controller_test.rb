@@ -18,7 +18,7 @@ class InstitutesControllerTest < ActionController::TestCase
 
   test "should create institute" do
     assert_difference('Institute.count') do
-      post :create, institute: { estd_year: @institute.estd_year, name: @institute.name }
+      post :create, institute: { estd: @institute.estd, name: @institute.name }
     end
 
     assert_redirected_to institute_path(assigns(:institute))
@@ -35,7 +35,7 @@ class InstitutesControllerTest < ActionController::TestCase
   end
 
   test "should update institute" do
-    put :update, id: @institute, institute: { estd_year: @institute.estd_year, name: @institute.name }
+    put :update, id: @institute, institute: { estd: @institute.estd, name: @institute.name }
     assert_redirected_to institute_path(assigns(:institute))
   end
 

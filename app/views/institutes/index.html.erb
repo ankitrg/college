@@ -3,7 +3,7 @@
 <table>
   <tr>
     <th>Name</th>
-    <th>Estd year</th>
+    <th>Estd</th>
     <th></th>
     <th></th>
     <th></th>
@@ -12,7 +12,7 @@
 <% @institutes.each do |institute| %>
   <tr>
     <td><%= institute.name %></td>
-    <td><%= institute.estd_year %></td>
+    <td><%= institute.estd %></td>
     <td><%= link_to 'Show', institute %></td>
     <td><%= link_to 'Edit', edit_institute_path(institute) %></td>
     <td><%= link_to 'Destroy', institute, method: :delete, data: { confirm: 'Are you sure?' } %></td>

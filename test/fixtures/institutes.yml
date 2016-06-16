@@ -2,8 +2,8 @@
 
 one:
   name: MyString
-  estd_year: MyString
+  estd: MyString
 
 two:
   name: MyString
-  estd_year: MyString
+  estd: MyString

@@ -80,4 +80,10 @@ class InstitutesController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def list
+    @institute = Institute.find(params[:id])
+    @students = Student.where(institute_id: params[:id])
+  end
+
 end

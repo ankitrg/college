@@ -35,6 +35,11 @@
     <%= f.label :chemistry %><br />
     <%= f.number_field :chemistry %>
   </div>
+  <div class="field">
+    <%= f.label :Institute %><br />
+    <%# f.collection_select :field_to_assign_to, Model, :value, :display %>
+    <%= f.collection_select :institute_id, Institute.all,  :id, :name %>
+  </div>
   <div class="actions">
     <%= f.submit %>
   </div>
