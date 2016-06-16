@@ -32,11 +32,6 @@ class InstitutesController < ApplicationController
     end
   end
 
-  # GET /institutes/1/edit
-  def edit
-    @institute = Institute.find(params[:id])
-  end
-
   # POST /institutes
   # POST /institutes.json
   def create
@@ -91,7 +86,14 @@ class InstitutesController < ApplicationController
   end
 
   def find
-
+    key = params[:key]
+    temp = "%"
+    for i in 0...key.size
+      temp += key[i].upcase + "%"
+    end
+    # @institutes = Institute.where(name: params[:key])
+    @institutes = Institute.where("name LIKE ?", temp)
+    render json: @institutes, status: :created, location: @institute
   end
 
 end

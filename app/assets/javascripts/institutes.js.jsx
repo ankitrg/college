@@ -3,6 +3,28 @@ var Search = React.createClass({
     return {data: []};
   },
 
+  componentDidMount: function() {
+    // this.searchOnServer();
+    // setInterval(this.searchOnServer, this.props.pollInterval);
+  },
+
+  searchOnServer: function () {
+    $.ajax({
+      url: this.props.url,
+      dataType: 'json',
+      type: 'POST',
+      data: key,
+      success: function (data) {
+        console.log("in ajax");
+        console.log(data);
+        this.setState({data: data});
+      }.bind(this),
+      error: function (xhr, status, err) {
+        console.error(this.props.url, status, err.toString());
+      }.bind(this)
+    });
+  },
+
   handleOnSearch: function (key) {
     console.log("handle on Search");
     console.log(key);
@@ -12,6 +34,8 @@ var Search = React.createClass({
       type: 'POST',
       data: key,
       success: function (data) {
+        console.log("in ajax");
+        console.log(data);
         this.setState({data: data});
       }.bind(this),
       error: function (xhr, status, err) {
@@ -65,13 +89,19 @@ var SearchBox = React.createClass({
 
 var ResultBox = React.createClass({
   render: function () {
+    debugger;
+    console.log("result box");
+    console.log(this.props.data);
     var results = this.props.data.map(function (d) {
+      console.log(d.name);
       return(
-        <tr>
-          {d.key}
+        <tr key={d.id}>
+          <td>{d.name}</td>
         </tr>
       );
-    })
+    });
+
+    console.log(results);
     return(
       <div className="resultTable">
         <table>
@@ -87,7 +117,7 @@ var ready = function () {
   console.log("ready");
   React.render(
     // <HelloWorld students = {RG.students}/>,
-    <Search url="hello"/>,
+    <Search url="find" pollInterval={1000}/>,
     document.getElementById('search-container')
   );
 };
