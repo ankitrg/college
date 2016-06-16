@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @institute.name %>
+</p>
+
+<p>
+  <b>Estd year:</b>
+  <%= @institute.estd_year %>
+</p>
+
+
+<%= link_to 'Edit', edit_institute_path(@institute) %> |
+<%= link_to 'Back', institutes_path %>

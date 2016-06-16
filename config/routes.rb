@@ -1,4 +1,7 @@
 College::Application.routes.draw do
+  resources :institutes
+
+
   resources :students
 
   get 'students/query/ask' => 'students#query'
