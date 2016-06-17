@@ -42,6 +42,8 @@ class StudentsController < ApplicationController
   # POST /students.json
   def create
     @student = Student.new(params[:student])
+    @student.extended_id = get_extended_id(@student)
+    @student.save
 
     respond_to do |format|
       if @student.save
@@ -242,5 +244,12 @@ class StudentsController < ApplicationController
         :year,
         :institute_id
         )
+    end
+
+    def get_extended_id(student)
+      eid = student.student_id.to_s + "_"
+      eid += student.institute.name[0...2] + "_"
+      eid += student.institute.id.to_s
+      eid
     end
 end

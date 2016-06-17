@@ -32,6 +32,11 @@ class InstitutesController < ApplicationController
     end
   end
 
+  # edit contorller
+  def edit
+    @institute = Institute.find(params[:id])
+  end
+
   # POST /institutes
   # POST /institutes.json
   def create

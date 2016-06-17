@@ -12,6 +12,7 @@
     <th>Physics</th>
     <th>Chemistry</th>
     <th>Institute</th>
+    <th>Extended Id</th>
     <th></th>
     <th></th>
     <th></th>
@@ -25,7 +26,8 @@
     <td><%= student.maths %></td>
     <td><%= student.physics %></td>
     <td><%= student.chemistry %></td>
-      <td><%= student.institute.name %></td>
+    <td><%= student.institute.name %></td>
+    <td><%= student.extended_id %></td>
     <td><%= link_to 'Show', student %></td>
     <td><%= link_to 'Edit', edit_student_path(student) %></td>
     <td><%= link_to 'Destroy', student, method: :delete, data: { confirm: 'Are you sure?' } %></td>
